@@ -1,5 +1,7 @@
 package pl.tlos.user.managment;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +12,9 @@ import pl.tlos.logger.Loggable;
 @Controller
 public class UserInfoController {
 
+	@Autowired
+	UserSLO userSLO;
+
 	@RequestMapping("/user/info")
 	@ResponseBody
 	@Loggable
@@ -17,11 +22,13 @@ public class UserInfoController {
 		return "hello " + name;
 	}
 
-	@RequestMapping("/user/infoEx")
+	@RequestMapping("/user/saveAsync")
 	@ResponseBody
 	@Loggable
-	public String getInfoAnon() throws Exception {
-		throw new Exception("Nic");
+	@Async
+	public String saveAsync(@RequestParam String name) {
+		userSLO.saveUser(name);
+		return "OK";
 	}
 
 }
