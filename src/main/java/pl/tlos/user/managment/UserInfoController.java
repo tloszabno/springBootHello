@@ -21,6 +21,7 @@ public class UserInfoController {
 	@ResponseBody
 	@Loggable
 	public String getInfo(@RequestParam String name) {
+		Loggers.entry(name);
 		return "hello " + name;
 	}
 
